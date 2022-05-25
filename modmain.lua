@@ -66,9 +66,9 @@ STRINGS.RECIPE_DESC.SKELETON_SADDLE = zh_en("禁忌的暗影工艺, 把你的宠
 
 
 -- 月光鞍具
--- 增加60%移速(speed +60%)，增加18攻击力(damage +18)，减少骑行所需顺重度5%，防止过热
+-- 增加60%移速(speed +60%)，增加18攻击力(damage +18)，减少骑行所需顺重度5%，防止过热，新增减伤25%
 -- Ingredient("malbatross_feather", 48), Ingredient("moonglass", 24), Ingredient("opalpreciousgem", 2), Ingredient("walrus_tusk", 4)}, TECH.CELESTIAL_ONE,
-AddRecipe2("lunar_saddle", {Ingredient("malbatross_feather", 48), Ingredient("moonglass", 24), Ingredient("walrus_tusk", 4), Ingredient("opalpreciousgem", 2)}, 
+AddRecipe2("lunar_saddle", {Ingredient("malbatross_feather", 48), Ingredient("moonrocknugget", 12), Ingredient("walrus_tusk", 4), Ingredient("opalpreciousgem", 2)}, 
 TECH.CELESTIAL_THREE, {atlas = "images/lunar_saddle.xml", image = "lunar_saddle.tex", no_deconstruction=true}, {"RIDING"})
 
 -- AddDeconstructRecipe("lunar_saddle",	{Ingredient("moonglass", 6)} )
@@ -92,14 +92,17 @@ STRINGS.RECIPE_DESC.SUN_SADDLE = zh_en("太阳，温暖和力量", "sun, warmth 
 local function OnSaddleChanged(inst, data)
     if data.saddle ~= nil then
 		if data.saddle.components.saddler.swapbuild == 'skeleton_saddle' then
-			-- inst.components.
 			-- print("有生物装备了暗影鞍具，防御力提升50%")
 			-- print(inst.components.health.externalabsorbmodifiers:Get())
 			inst.components.health.externalabsorbmodifiers:SetModifier("skeleton_saddle", 0.5)
 			-- print(inst.components.health.externalabsorbmodifiers:Get())
 		end
+		if data.saddle.components.saddler.swapbuild == 'lunar_saddle' then
+			inst.components.health.externalabsorbmodifiers:SetModifier("lunar_saddle", 0.25)
+		end
 	else
 		inst.components.health.externalabsorbmodifiers:RemoveModifier("skeleton_saddle")
+		inst.components.health.externalabsorbmodifiers:RemoveModifier("lunar_saddle")
     end
 end
 

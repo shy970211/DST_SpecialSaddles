@@ -26,11 +26,11 @@ local function fn()
 	inst.AnimState:SetBuild("sun_saddle")
 	inst.AnimState:PlayAnimation("idle")
 	
-    inst.Light:SetFalloff(0.6)
-    inst.Light:SetIntensity(.5)
-    inst.Light:SetRadius(0.5)
-    inst.Light:SetColour(223/255, 208/255, 69/255)
-    inst.Light:Enable(true)
+    -- inst.Light:SetFalloff(0.6)
+    -- inst.Light:SetIntensity(.5)
+    -- inst.Light:SetRadius(0.5)
+    -- inst.Light:SetColour(223/255, 208/255, 69/255)
+    -- inst.Light:Enable(true)
 
 	inst.mounted_foleysound = "dontstarve/beefalo/saddle/race_foley"
 

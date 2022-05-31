@@ -126,45 +126,57 @@ AddComponentPostInit("rideable", SpecialSaddleRideableAdapter)
 
 -- 装备特殊鞍具骑行时对骑手的特殊效果
 local function onMounted(inst, data)
-	local TEMP_WALL_Modifi = 20
-	if data.target ~= nil then
+	local world_temp = GLOBAL.TheWorld.state.temperature
+	local temp_modifi = (world_temp - 35) * -0.6
+	if data.target ~= nil and data.target.components.rideable.saddle ~= nil then
 		local saddler = data.target.components.rideable.saddle.components.saddler
 		if saddler.swapbuild == 'lunar_saddle' and inst.components.temperature ~= nil then
-			-- print("防止过热，启动")
-			-- print(inst.components.temperature.maxtemp)
-			inst.components.temperature.maxtemp = inst.components.temperature.maxtemp - TEMP_WALL_Modifi
+			if world_temp > 70 then
+				-- print("防止过热，启动。修正温度: ")
+				-- print(temp_modifi)
+				inst.components.temperature:SetModifier("lunar_saddle", temp_modifi)
+			end
 		end
 		if saddler.swapbuild == 'sun_saddle' and inst.components.temperature ~= nil then
-			-- print("防止过冷，启动")
+			if world_temp < 0 then
+				-- print("防止过冷，启动。修正温度: ")
+				-- print(temp_modifi)
+				inst.components.temperature:SetModifier("sun_saddle", temp_modifi)
+			end
+			-- saddler.light.entity:SetParent(inst.entity)
 			-- print(inst.components.temperature.mintemp)
-			inst.components.temperature.mintemp = inst.components.temperature.mintemp + TEMP_WALL_Modifi
+			-- inst.components.temperature.mintemp = inst.components.temperature.mintemp + TEMP_WALL_Modifi
 		end
 		if saddler.swapbuild == 'skeleton_saddle' and inst.components.temperature ~= nil then
-			-- print("加速饥饿消耗")
+			print("加速饥饿消耗")
 			-- print(inst.components.hunger.hungerrate)
-			inst.components.hunger.burnratemodifiers:SetModifier(saddler.inst, 2.5)
+			inst.components.hunger.burnratemodifiers:SetModifier("skeleton_saddle", 2.5)
 		end
 	end
 end
 
 
 local function onDismount(inst, data)
-	local TEMP_WALL_Modifi = 20
-	if data.target ~= nil then
-		local saddler = data.target.components.rideable.saddle.components.saddler
-		if saddler.swapbuild == 'lunar_saddle' and inst.components.temperature ~= nil then
-			-- print("防止过热，关闭")
-			inst.components.temperature.maxtemp = inst.components.temperature.maxtemp + TEMP_WALL_Modifi
-		end
-		if saddler.swapbuild == 'sun_saddle' and inst.components.temperature ~= nil then
-			-- print("防止过冷，关闭")
-			inst.components.temperature.mintemp = inst.components.temperature.mintemp - TEMP_WALL_Modifi
-		end
-		if saddler.swapbuild == 'skeleton_saddle' and inst.components.temperature ~= nil then
-			-- print("恢复饥饿消耗")
-			inst.components.hunger.burnratemodifiers:RemoveModifier(saddler.inst)
-		end
-	end
+	-- local TEMP_WALL_Modifi = 20
+	inst.components.temperature:RemoveModifier("lunar_saddle")
+	inst.components.temperature:RemoveModifier("sun_saddle")
+	inst.components.hunger.burnratemodifiers:RemoveModifier("skeleton_saddle")
+	-- if data.target ~= nil and data.target.components.rideable.saddle ~= nil then
+	-- 	local saddler = data.target.components.rideable.saddle.components.saddler
+	-- 	if saddler.swapbuild == 'lunar_saddle' and inst.components.temperature ~= nil then
+	-- 		print("防止过热，关闭")
+	-- 		inst.components.temperature.maxtemp = inst.components.temperature.maxtemp + TEMP_WALL_Modifi
+	-- 	end
+	-- 	if saddler.swapbuild == 'sun_saddle' and inst.components.temperature ~= nil then
+	-- 		print("防止过冷，关闭")
+	-- 		inst.components.temperature.mintemp = inst.components.temperature.mintemp - TEMP_WALL_Modifi
+	-- 	end
+	-- 	if saddler.swapbuild == 'skeleton_saddle' and inst.components.temperature ~= nil then
+	-- 		print("恢复饥饿消耗")
+	-- 		inst.components.hunger.burnratemodifiers:RemoveModifier(saddler.inst)
+	-- 	end
+	-- end
+	
 end
 
 

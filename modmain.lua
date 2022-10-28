@@ -191,7 +191,7 @@ AddComponentPostInit("rider", SpecialSaddleRiderAdapter)
 
 
 -- 添加水果圣代功能：少量增加驯服度
-AddPrefabPostInit("fruitmedley", function(inst)
+AddPrefabPostInit("ratatouille", function(inst)
 	if inst.components.edible ~= nil then
 		inst.components.edible:SetOnEatenFn(
 			function(inst, eater)

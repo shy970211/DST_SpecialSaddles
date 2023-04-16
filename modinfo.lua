@@ -2,7 +2,7 @@
 name = "Special Saddles"
 description = "特殊鞍具，更加贵也更加强力的鞍具，为您的后期养牛生活增添乐趣\n(Special Saddles, more expensive and more powerful saddles, add fun to your later cattle life)"
 author = "howieshen and pinkmollies and ryuu "
-version = "1.1.2"
+version = "2.0.0"
 
 -- This is the URL name of the mod's thread on the forum; the part after the ? and before the first & in the url
 -- Example:

@@ -12,7 +12,7 @@ local function onusedup(inst)
     inst:Remove()
 end
 
-local function fn()
+local function sun_saddle()
 	local inst = CreateEntity()
 
 	inst.entity:AddTransform()
@@ -25,12 +25,6 @@ local function fn()
 	inst.AnimState:SetBank("saddlebasic")
 	inst.AnimState:SetBuild("sun_saddle")
 	inst.AnimState:PlayAnimation("idle")
-	
-    -- inst.Light:SetFalloff(0.6)
-    -- inst.Light:SetIntensity(.5)
-    -- inst.Light:SetRadius(0.5)
-    -- inst.Light:SetColour(223/255, 208/255, 69/255)
-    -- inst.Light:Enable(true)
 
 	inst.mounted_foleysound = "dontstarve/beefalo/saddle/race_foley"
 
@@ -56,11 +50,29 @@ local function fn()
 	inst.components.finiteuses:SetUses(3)
 	inst.components.finiteuses:SetOnFinished(onusedup)
 
-
-
 	MakeHauntableLaunch(inst)
 
 	return inst
 end
 
-return Prefab("sun_saddle", fn, assets)
+local function sun_saddle_fn()
+	local inst = CreateEntity()
+    inst.entity:AddTransform()
+    inst.entity:AddNetwork()
+
+    inst.entity:SetPristine()
+
+    if not TheWorld.ismastersim then
+        return inst
+    end
+
+	inst:AddTag("HASHEATER")
+	inst:AddComponent("heater")
+	inst.components.heater.heat = 40
+
+	inst.persists = false
+	return inst
+end
+
+return Prefab("sun_saddle", sun_saddle, assets)
+	, Prefab("sun_saddle_fn", sun_saddle_fn)

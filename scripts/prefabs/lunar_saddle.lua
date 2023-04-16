@@ -12,7 +12,7 @@ local function onusedup(inst)
     inst:Remove()
 end
 
-local function fn()
+local function lunar_saddle()
 	local inst = CreateEntity()
 
 	inst.entity:AddTransform()
@@ -54,4 +54,36 @@ local function fn()
 	return inst
 end
 
-return Prefab("lunar_saddle", fn, assets)
+local function lunar_saddle_fn()
+    local inst = CreateEntity()
+
+    inst.entity:AddTransform()
+    inst.entity:AddLight()
+    inst.entity:AddNetwork()
+
+    inst:AddTag("FX")
+
+    inst.Light:SetFalloff(0.6)
+    inst.Light:SetIntensity(.6)
+    inst.Light:SetRadius(0.6)
+    inst.Light:SetColour(236/255, 236/255, 210/255)
+    inst.Light:Enable(true)
+
+    inst.entity:SetPristine()
+
+    if not TheWorld.ismastersim then
+        return inst
+    end
+
+	inst:AddTag("HASHEATER")
+	inst:AddComponent("heater")
+	inst.components.heater.heat = 10
+	inst.components.heater:SetThermics(false, true)
+
+    inst.persists = false
+
+    return inst
+end
+
+return Prefab("lunar_saddle", lunar_saddle, assets, { "lunar_saddle" })
+	, Prefab("lunar_saddle_fn", lunar_saddle_fn)

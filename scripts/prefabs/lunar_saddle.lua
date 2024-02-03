@@ -49,6 +49,7 @@ local function lunar_saddle()
 	inst.components.finiteuses:SetUses(3)
 	inst.components.finiteuses:SetOnFinished(onusedup)
 
+	inst:AddTag("combatmount")
 	MakeHauntableLaunch(inst)
 
 	return inst
@@ -64,9 +65,9 @@ local function lunar_saddle_fn()
     inst:AddTag("FX")
 
     inst.Light:SetFalloff(0.6)
-    inst.Light:SetIntensity(.6)
-    inst.Light:SetRadius(0.6)
-    inst.Light:SetColour(236/255, 236/255, 210/255)
+    inst.Light:SetIntensity(.5)
+    inst.Light:SetRadius(0.5)
+    inst.Light:SetColour(64 / 255, 64 / 255, 208 / 255)
     inst.Light:Enable(true)
 
     inst.entity:SetPristine()
@@ -80,7 +81,7 @@ local function lunar_saddle_fn()
 	inst.components.heater.heat = 10
 	inst.components.heater:SetThermics(false, true)
 
-    inst.persists = false
+	inst.persists = false
 
     return inst
 end

@@ -2,7 +2,7 @@
 name = "Special Saddles"
 description = "特殊鞍具，更加贵也更加强力的鞍具，为您的后期养牛生活增添乐趣\n(Special Saddles, more expensive and more powerful saddles, add fun to your later cattle life)"
 author = "howieshen and pinkmollies and ryuu "
-version = "2.0.0"
+version = "2.2.0"
 
 -- This is the URL name of the mod's thread on the forum; the part after the ? and before the first & in the url
 -- Example:
@@ -41,5 +41,25 @@ configuration_options = {
             {description = "中文", data = "zh"},
         },
         default = "zh",
+    },
+    {
+        name = "lunar_saddle_fn_switch",
+        label = "月光鞍具特效/lunar saddle special effects",
+        hover = "开启或关闭/trun on or off",
+        options = {
+            {description = "ON", data = true},
+            {description = "OFF", data = false},
+        },
+        default = true,
+    },
+    {
+        name = "sun_saddle_fn_switch",
+        label = "旭日鞍具特效/sun saddle special effects",
+        hover = "开启或关闭/trun on or off",
+        options = {
+            {description = "ON", data = true},
+            {description = "OFF", data = false},
+        },
+        default = true,
     },
 }

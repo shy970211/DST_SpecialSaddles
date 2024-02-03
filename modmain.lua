@@ -74,23 +74,26 @@ AddRecipe2("lunar_saddle", {
 STRINGS.NAMES.LUNAR_SADDLE = zh_en("月光鞍具", "Lunar Saddle")
 STRINGS.RECIPE_DESC.LUNAR_SADDLE = zh_en("这东西似乎在不停吸收生物的热能, 这些能量去哪了？", "This thing seems to be sucking up heat from living things. Where does that energy go?")
 
-
+local lunar_saddle_fn_switch = GetModConfigData("lunar_saddle_fn_switch")
+local sun_saddle_fn_switch = GetModConfigData("sun_saddle_fn_switch")
 -- 装备特殊鞍具对生物的特殊效果
 local function OnSaddleChanged(inst, data)
     if data.saddle ~= nil then
 		if data.saddle.components.saddler.swapbuild == 'skeleton_saddle' then
-			-- print("有生物装备了暗影鞍具，防御力提升50%")
 			inst.components.health.externalabsorbmodifiers:SetModifier("skeleton_saddle", 0.5)
 		end
 		if data.saddle.components.saddler.swapbuild == 'lunar_saddle' then
 			inst.components.health.externalabsorbmodifiers:SetModifier("lunar_saddle", 0.25)
-			inst._lunar_saddle_fn = SpawnPrefab("lunar_saddle_fn")
-			inst:AddChild(inst._lunar_saddle_fn)
+			if lunar_saddle_fn_switch == true then
+				inst._lunar_saddle_fn = SpawnPrefab("lunar_saddle_fn")
+				inst:AddChild(inst._lunar_saddle_fn)
+			end
 		end
 		if data.saddle.components.saddler.swapbuild == 'sun_saddle' then
-			inst.components.health.externalabsorbmodifiers:SetModifier("lunar_saddle", 0.25)
-			inst._sun_saddle_fn = SpawnPrefab("sun_saddle_fn")
-			inst:AddChild(inst._sun_saddle_fn)
+			if sun_saddle_fn_switch == true then
+				inst._sun_saddle_fn = SpawnPrefab("sun_saddle_fn")
+				inst:AddChild(inst._sun_saddle_fn)
+			end
 		end
 	else
 		inst.components.health.externalabsorbmodifiers:RemoveModifier("skeleton_saddle")
@@ -127,7 +130,6 @@ local function onMounted(inst, data)
 	if data.target ~= nil and data.target.components.rideable.saddle ~= nil then
 		local saddler = data.target.components.rideable.saddle.components.saddler
 		if saddler.swapbuild == 'skeleton_saddle' then
-			print("加速饥饿消耗")
 			inst.components.hunger.burnratemodifiers:SetModifier("skeleton_saddle", 2.5)
 		end
 		if saddler.swapbuild == 'winged_saddle' and inst.components.temperature ~= nil then

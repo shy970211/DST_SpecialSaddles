@@ -50,6 +50,7 @@ local function sun_saddle()
 	inst.components.finiteuses:SetUses(3)
 	inst.components.finiteuses:SetOnFinished(onusedup)
 
+	inst:AddTag("combatmount")
 	MakeHauntableLaunch(inst)
 
 	return inst
@@ -68,7 +69,7 @@ local function sun_saddle_fn()
 
 	inst:AddTag("HASHEATER")
 	inst:AddComponent("heater")
-	inst.components.heater.heat = 40
+	inst.components.heater.heat = 30
 
 	inst.persists = false
 	return inst

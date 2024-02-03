@@ -49,6 +49,7 @@ local function fn()
 	inst.components.finiteuses:SetUses(2)
 	inst.components.finiteuses:SetOnFinished(onusedup)
 
+	inst:AddTag("combatmount")
 	MakeHauntableLaunch(inst)
 
 	return inst
